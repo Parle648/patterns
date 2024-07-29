@@ -38,13 +38,12 @@ export const Column = ({ listId, listName, cards, index }: Props) => {
             <Title
               aria-label={listName}
               title={listName}
-              onChange={() => {}}
+              onChange={(newName: string) => listService.rename(newName, listId)}
               fontSize="large"
               width={200}
               isBold
             />
             <Splitter />
-            {/* delete list */}
             <DeleteButton color="#FFF0" onClick={() => listService.delete(listId)} />
           </Header>
           <CardsList listId={listId} listType="CARD" cards={cards} />

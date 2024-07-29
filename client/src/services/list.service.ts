@@ -7,5 +7,8 @@ export const listService = {
     },
     delete (index: string) {
         socket.emit(ListEvent.DELETE, index);
+    },
+    rename (newName: string, listId: string) {
+        socket.emit(ListEvent.RENAME, {name: newName, listId})
     }
 }

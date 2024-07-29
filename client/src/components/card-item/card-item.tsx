@@ -33,13 +33,12 @@ export const CardItem = ({ card, cardID, isDragging, provided, listId }: Props) 
     >
       <Content>
         <Title onChange={(newTitle: string) => taskService.changeTitle(newTitle, listId, cardID)} title={card.name} fontSize="large" isBold />
-        {/* change description */}
         <Text text={card.description} onChange={(newDescription: string) => taskService.changeDescription(newDescription, listId, cardID)} />
         <Footer>
           <DeleteButton onClick={() => taskService.delete(listId, cardID)} />
           <Splitter />
           {/* copy card */}
-          <CopyButton onClick={() => {}} />
+          <CopyButton onClick={() => taskService.copyCard({name: card.name, description: card.description}, listId)} />
         </Footer>
       </Content>
     </Container>

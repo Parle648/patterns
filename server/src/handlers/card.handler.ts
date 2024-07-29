@@ -11,12 +11,28 @@ class CardHandler extends SocketHandler {
     socket.on(CardEvent.DELETE, this.deleteCard.bind(this))
     socket.on(CardEvent.RENAME, this.changeCardTitle.bind(this))
     socket.on(CardEvent.CHANGE_DESCRIPTION, this.changeCardDescription.bind(this))
+    socket.on(CardEvent.CREATE_COPY, this.copyCard.bind(this))
   }
 
   public createCard(listId: string, cardName: string): void {
     const newCard = new Card(cardName, "");
     const lists = this.db.getData();
 
+    const updatedLists = lists.map((list) =>
+      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
+    );
+
+    this.db.setData(updatedLists);
+    this.updateLists();
+  }
+
+  public copyCard({cardDTO, listId}: {cardDTO: {name: string, description: string}, listId: string}): void {
+
+    const newCard = new Card(cardDTO.name, cardDTO.description);
+    const lists = this.db.getData();
+
+    console.log(newCard, lists);
+    
     const updatedLists = lists.map((list) =>
       list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
     );

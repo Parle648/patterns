@@ -13,5 +13,9 @@ export const taskService = {
     },
     changeDescription (newDescription: string, listId: string, cardId: string) {
         socket.emit(CardEvent.CHANGE_DESCRIPTION, {newDescription, listId, cardId})
+    },
+    // todo create cardDTO type
+    copyCard (cardDTO: {name: string, description: string}, listId: string): void {
+        socket.emit(CardEvent.CREATE_COPY, {cardDTO, listId})
     }
 }

@@ -9,14 +9,17 @@ import { Title } from "../primitives/title";
 import { Container } from "./styled/container";
 import { Content } from "./styled/content";
 import { Footer } from "./styled/footer";
+import { taskService } from "../../services/task.service";
 
 type Props = {
   card: Card;
   isDragging: boolean;
   provided: DraggableProvided;
+  cardID: string,
+  listId: string
 };
 
-export const CardItem = ({ card, isDragging, provided }: Props) => {
+export const CardItem = ({ card, cardID, isDragging, provided, listId }: Props) => {
   return (
     <Container
       className="card-container"
@@ -32,8 +35,10 @@ export const CardItem = ({ card, isDragging, provided }: Props) => {
         <Title onChange={() => {}} title={card.name} fontSize="large" isBold />
         <Text text={card.description} onChange={() => {}} />
         <Footer>
-          <DeleteButton onClick={() => {}} />
+          {/* delete card */}
+          <DeleteButton onClick={() => taskService.delete(listId, cardID)} />
           <Splitter />
+          {/* copy card */}
           <CopyButton onClick={() => {}} />
         </Footer>
       </Content>

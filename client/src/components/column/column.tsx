@@ -12,6 +12,7 @@ import { Title } from "../primitives/title";
 import { Footer } from "./components/footer";
 import { Container } from "./styled/container";
 import { Header } from "./styled/header";
+import { listService } from "../../services/list.service";
 
 type Props = {
   listId: string;
@@ -37,13 +38,13 @@ export const Column = ({ listId, listName, cards, index }: Props) => {
             <Title
               aria-label={listName}
               title={listName}
-              onChange={() => {}}
+              onChange={(newName: string) => listService.rename(newName, listId)}
               fontSize="large"
               width={200}
               isBold
             />
             <Splitter />
-            <DeleteButton color="#FFF0" onClick={() => {}} />
+            <DeleteButton color="#FFF0" onClick={() => listService.delete(listId)} />
           </Header>
           <CardsList listId={listId} listType="CARD" cards={cards} />
           <Footer onCreateCard={() => {}} />

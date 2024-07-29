@@ -12,6 +12,7 @@ import { Title } from "../primitives/title";
 import { Footer } from "./components/footer";
 import { Container } from "./styled/container";
 import { Header } from "./styled/header";
+import { listService } from "../../services/list.service";
 
 type Props = {
   listId: string;
@@ -43,7 +44,8 @@ export const Column = ({ listId, listName, cards, index }: Props) => {
               isBold
             />
             <Splitter />
-            <DeleteButton color="#FFF0" onClick={() => {}} />
+            {/* delete list */}
+            <DeleteButton color="#FFF0" onClick={() => listService.delete(listId)} />
           </Header>
           <CardsList listId={listId} listType="CARD" cards={cards} />
           <Footer onCreateCard={() => {}} />

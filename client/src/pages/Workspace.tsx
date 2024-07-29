@@ -13,6 +13,7 @@ import { ColumnCreator } from "../components/column-creator/column-creator";
 import { SocketContext } from "../context/socket";
 import { reorderService } from "../services/reorder.service";
 import { Container } from "./styled/container";
+import { listService } from "../services/list.service";
 
 export const Workspace = () => {
   const [lists, setLists] = useState<List[]>([]);
@@ -84,7 +85,8 @@ export const Workspace = () => {
                 />
               ))}
               {provided.placeholder}
-              <ColumnCreator onCreateList={() => {}} />
+
+              <ColumnCreator onCreateList={(name: string) => listService.create(name)} />
             </Container>
           )}
         </Droppable>

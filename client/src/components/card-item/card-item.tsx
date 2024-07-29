@@ -32,10 +32,10 @@ export const CardItem = ({ card, cardID, isDragging, provided, listId }: Props) 
       aria-label={card.name}
     >
       <Content>
-        <Title onChange={() => {}} title={card.name} fontSize="large" isBold />
+        <Title onChange={(newTitle: string) => taskService.changeTitle(newTitle, listId, cardID)} title={card.name} fontSize="large" isBold />
+        {/* change description */}
         <Text text={card.description} onChange={() => {}} />
         <Footer>
-          {/* delete card */}
           <DeleteButton onClick={() => taskService.delete(listId, cardID)} />
           <Splitter />
           {/* copy card */}

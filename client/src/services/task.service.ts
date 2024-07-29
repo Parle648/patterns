@@ -7,5 +7,8 @@ export const taskService = {
     },
     delete (listId: string, cardId: string): void {
         socket.emit(CardEvent.DELETE, {listId, cardId})
+    },
+    changeTitle (newTitle: string, listId: string, cardId: string) {
+        socket.emit(CardEvent.RENAME, {newTitle, listId, cardId})
     }
 }

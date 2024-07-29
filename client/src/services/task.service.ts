@@ -10,5 +10,8 @@ export const taskService = {
     },
     changeTitle (newTitle: string, listId: string, cardId: string) {
         socket.emit(CardEvent.RENAME, {newTitle, listId, cardId})
+    },
+    changeDescription (newDescription: string, listId: string, cardId: string) {
+        socket.emit(CardEvent.CHANGE_DESCRIPTION, {newDescription, listId, cardId})
     }
 }

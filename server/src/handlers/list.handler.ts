@@ -53,9 +53,6 @@ class ListHandler extends SocketHandler {
       return list;
     });
 
-    console.log(name, );
-    
-
     this.db.setData(filteredLists);
     this.updateLists();
   }

@@ -13,6 +13,7 @@ import { Footer } from "./components/footer";
 import { Container } from "./styled/container";
 import { Header } from "./styled/header";
 import { listService } from "../../services/list.service";
+import { taskService } from "../../services/task.service";
 
 type Props = {
   listId: string;
@@ -47,7 +48,7 @@ export const Column = ({ listId, listName, cards, index }: Props) => {
             <DeleteButton color="#FFF0" onClick={() => listService.delete(listId)} />
           </Header>
           <CardsList listId={listId} listType="CARD" cards={cards} />
-          <Footer onCreateCard={() => {}} />
+          <Footer onCreateCard={(taskName: string) => taskService.create(listId, taskName)} />
         </Container>
       )}
     </Draggable>

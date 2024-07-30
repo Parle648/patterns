@@ -3,6 +3,7 @@ import type { Socket } from "socket.io";
 import { CardEvent } from "../common/enums/enums";
 import { Card } from "../data/models/card";
 import { SocketHandler } from "./socket.handler";
+import CardPrototype from "../patterns/copyPrototype";
 
 class CardHandler extends SocketHandler {
   public handleConnection(socket: Socket): void {
@@ -26,13 +27,12 @@ class CardHandler extends SocketHandler {
     this.updateLists();
   }
 
+  // todo prototype
   public copyCard({cardDTO, listId}: {cardDTO: {name: string, description: string}, listId: string}): void {
-
-    const newCard = new Card(cardDTO.name, cardDTO.description);
+    // PATTERN: PROTOTYPE
+    const newCard = new CardPrototype(cardDTO.name, cardDTO.description).clone();
     const lists = this.db.getData();
 
-    console.log(newCard, lists);
-    
     const updatedLists = lists.map((list) =>
       list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
     );

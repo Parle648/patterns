@@ -18,10 +18,13 @@ class Memento {
     if (this.index > 0) {
         this.index = this.index - 1;
     }
+    JSON.parse(this.memo[this.index]).forEach(element => {
+      console.log(element.cards)
+    });
     db.setData(JSON.parse(this.memo[this.index]))
     this.memo.push(this.memo[this.index])
-    this.index = this.index + 1;
-    return JSON.parse(this.memo[this.index - 1]);
+    // this.index = this.index + 1;
+    return JSON.parse(this.memo[this.index]);
   }
 
   public memoAhead() {

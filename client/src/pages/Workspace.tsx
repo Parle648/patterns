@@ -28,7 +28,6 @@ export const Workspace = () => {
     document.addEventListener('keyup', function(event) {
       if (event.ctrlKey && event.key === 'z') {
         socket.emit(MemoEvent.BACK)
-        console.log(123);
       }
   
       if (event.ctrlKey && event.key === 'y') {

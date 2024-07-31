@@ -40,6 +40,7 @@ export const Workspace = () => {
     };
   }, []);
   
+  console.log(lists);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {

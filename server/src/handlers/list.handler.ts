@@ -47,8 +47,8 @@ class ListHandler extends SocketHandler {
 
     const lists = this.db.getData();
     const newList = new List(name);
-    memoService.createMemo(JSON.stringify(newList));
     this.db.setData(lists.concat(newList));
+    memoService.createMemo(JSON.stringify(this.db.getData()));
     this.updateLists();
   }
 

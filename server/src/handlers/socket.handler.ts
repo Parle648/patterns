@@ -5,6 +5,7 @@ import { Database } from "../data/database";
 import { ReorderService } from "../services/reorder.service";
 import ReorderServiceProxy from "../patterns/proxyPattern";
 import { publisher } from "../patterns/observer";
+import { memoService } from "../patterns/memento";
 
 abstract class SocketHandler {
   protected db: Database;
@@ -26,6 +27,7 @@ abstract class SocketHandler {
   public abstract handleConnection(socket: Socket): void;
 
   protected updateLists(): void {
+    memoService.createInitialMemo(JSON.stringify(this.db.getData()))
     this.io.emit(ListEvent.UPDATE, this.db.getData());
   }
 }

@@ -48,8 +48,8 @@ class CardHandler extends SocketHandler {
     const newCard = new CardPrototype(cardDTO.name, cardDTO.description).clone();
     const lists = this.db.getData();
 
-    const updatedLists = lists.map((list) =>
-      list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
+    const updatedLists: any = lists.map((list) =>
+      list.id === listId ? {...list, cards: [...list.cards, newCard]} : list
     );
 
     memoService.createMemo(JSON.stringify(updatedLists));

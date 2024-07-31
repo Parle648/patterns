@@ -31,9 +31,11 @@ const onConnection = (socket: Socket): void => {
   new CardHandler(io, db, reorderService).handleConnection(socket);
 
   socket.on(MemoEvent.BACK, () => {
-    // const memo = memoService.memoBack();
-
     socket.emit(ListEvent.UPDATE, memoService.memoBack())
+  });
+
+  socket.on(MemoEvent.AHEAD, () => {
+    socket.emit(ListEvent.UPDATE, memoService.memoAhead())
   });
 };
 

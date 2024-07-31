@@ -3,6 +3,7 @@ import type { Socket } from "socket.io";
 import { ListEvent } from "../common/enums/enums";
 import { List } from "../data/models/list";
 import { SocketHandler } from "./socket.handler";
+import { memoService } from "../patterns/memento";
 
 class ListHandler extends SocketHandler {
   public handleConnection(socket: Socket): void {
@@ -30,6 +31,9 @@ class ListHandler extends SocketHandler {
       sourceIndex,
       destinationIndex
     );
+
+    memoService.createMemo(JSON.stringify(reorderedLists));
+
     this.db.setData(reorderedLists);
     this.updateLists();
   }
@@ -43,6 +47,7 @@ class ListHandler extends SocketHandler {
 
     const lists = this.db.getData();
     const newList = new List(name);
+    memoService.createMemo(JSON.stringify(newList));
     this.db.setData(lists.concat(newList));
     this.updateLists();
   }
@@ -56,6 +61,8 @@ class ListHandler extends SocketHandler {
 
     const lists = this.db.getData();
     const filteredLists = lists.filter((list: List) => list.id !== listId);
+
+    memoService.createMemo(JSON.stringify(filteredLists));
 
     this.db.setData(filteredLists);
     this.updateLists();
@@ -76,6 +83,8 @@ class ListHandler extends SocketHandler {
 
       return list;
     });
+
+    memoService.createMemo(JSON.stringify(filteredLists));
 
     this.db.setData(filteredLists);
     this.updateLists();

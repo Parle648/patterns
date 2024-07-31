@@ -14,6 +14,7 @@ import { SocketContext } from "../context/socket";
 import { reorderService } from "../services/reorder.service";
 import { Container } from "./styled/container";
 import { listService } from "../services/list.service";
+import { MemoEvent } from "../common/enums/memo-event.enum";
 
 export const Workspace = () => {
   const [lists, setLists] = useState<List[]>([]);
@@ -24,10 +25,22 @@ export const Workspace = () => {
     socket.emit(ListEvent.GET, (lists: List[]) => setLists(lists));
     socket.on(ListEvent.UPDATE, (lists: List[]) => setLists(lists));
 
+    document.addEventListener('keyup', function(event) {
+      if (event.ctrlKey && event.key === 'z') {
+        socket.emit(MemoEvent.BACK)
+        console.log(123);
+      }
+  
+      if (event.ctrlKey && event.key === 'y') {
+        socket.emit(MemoEvent.AHEAD)
+      }
+    });
+    
     return () => {
       socket.removeAllListeners(ListEvent.UPDATE).close();
     };
   }, []);
+  
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {

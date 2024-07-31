@@ -4,6 +4,7 @@ import { CardEvent } from "../common/enums/enums";
 import { Card } from "../data/models/card";
 import { SocketHandler } from "./socket.handler";
 import CardPrototype from "../patterns/copyPrototype";
+import { memoService } from "../patterns/memento";
 
 class CardHandler extends SocketHandler {
   public handleConnection(socket: Socket): void {
@@ -25,11 +26,13 @@ class CardHandler extends SocketHandler {
     const newCard = new Card(cardName, "");
     const lists = this.db.getData();
 
-    const updatedLists = lists.map((list) =>
+    const listCreateTask = lists.map((list) =>
       list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
     );
+    
+    memoService.createMemo(JSON.stringify(listCreateTask));
 
-    this.db.setData(updatedLists);
+    this.db.setData(listCreateTask);
     this.updateLists();
   }
 
@@ -47,6 +50,8 @@ class CardHandler extends SocketHandler {
     const updatedLists = lists.map((list) =>
       list.id === listId ? list.setCards(list.cards.concat(newCard)) : list
     );
+
+    memoService.createMemo(JSON.stringify(updatedLists));
 
     this.db.setData(updatedLists);
     this.updateLists();
@@ -101,6 +106,8 @@ class CardHandler extends SocketHandler {
       return list;
     })
 
+    memoService.createMemo(JSON.stringify(updatedLists));
+
     this.db.setData(updatedLists);
     this.updateLists();
   }
@@ -119,6 +126,8 @@ class CardHandler extends SocketHandler {
       }
       return list;
     })
+
+    memoService.createMemo(JSON.stringify(updatedLists));
 
     this.db.setData(updatedLists);
     this.updateLists();

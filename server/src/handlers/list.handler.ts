@@ -18,6 +18,12 @@ class ListHandler extends SocketHandler {
   }
 
   private reorderLists(sourceIndex: number, destinationIndex: number): void {
+    if (sourceIndex === undefined || destinationIndex === undefined) {
+      this.publisher.log('Error: List data is empty', 'error');
+    }
+
+    this.publisher.log(`List reordered with data: ${JSON.stringify({sourceIndex, destinationIndex})}`, 'info');
+
     const lists = this.db.getData();
     const reorderedLists = this.reorderService.reorder(
       lists,
@@ -29,6 +35,12 @@ class ListHandler extends SocketHandler {
   }
 
   private createList(name: string): void {
+    if (name === undefined) {
+      this.publisher.log('Error: List data is empty', 'error');
+    }
+
+    this.publisher.log(`List create with data: ${JSON.stringify({name})}`, 'info');
+
     const lists = this.db.getData();
     const newList = new List(name);
     this.db.setData(lists.concat(newList));
@@ -36,6 +48,12 @@ class ListHandler extends SocketHandler {
   }
 
   private deleteList(listId: string): void {
+    if (listId === undefined) {
+      this.publisher.log('Error: List data is empty', 'error');
+    }
+
+    this.publisher.log(`List deleted with data: ${JSON.stringify({listId})}`, 'info');
+
     const lists = this.db.getData();
     const filteredLists = lists.filter((list: List) => list.id !== listId);
 
@@ -44,6 +62,12 @@ class ListHandler extends SocketHandler {
   }
 
   private renameList({name, listId}: {name: string, listId: string}): void {
+    if (listId === undefined || name === undefined) {
+      this.publisher.log('Error: List data is empty', 'error');
+    }
+
+    this.publisher.log(`List renamed with data: ${JSON.stringify({listId, newName: name})}`, 'info');
+
     const lists = this.db.getData();
     const filteredLists = lists.filter((list: List) => {
       if (list.id === listId) {

@@ -16,6 +16,12 @@ class CardHandler extends SocketHandler {
   }
 
   public createCard(listId: string, cardName: string): void {
+    if (listId === undefined || cardName === undefined) {
+      this.publisher.log('Error: Card data is empty', 'error');
+    }
+
+    this.publisher.log(`Card created with data: ${JSON.stringify({listId, cardName})}`, 'info')
+
     const newCard = new Card(cardName, "");
     const lists = this.db.getData();
 
@@ -29,6 +35,11 @@ class CardHandler extends SocketHandler {
 
   // todo prototype
   public copyCard({cardDTO, listId}: {cardDTO: {name: string, description: string}, listId: string}): void {
+    if (listId === undefined || cardDTO === undefined) {
+      this.publisher.log('Error: Card data is empty', 'error');
+    }
+
+    this.publisher.log(`Card copied with data: ${JSON.stringify({listId, cardDTO})}`, 'info')
     // PATTERN: PROTOTYPE
     const newCard = new CardPrototype(cardDTO.name, cardDTO.description).clone();
     const lists = this.db.getData();
@@ -52,19 +63,35 @@ class CardHandler extends SocketHandler {
     sourceListId: string;
     destinationListId: string;
   }): void {
-    const lists = this.db.getData();
-    const reordered = this.reorderService.reorderCards({
-      lists,
-      sourceIndex,
-      destinationIndex,
-      sourceListId,
-      destinationListId,
-    });
-    this.db.setData(reordered);
-    this.updateLists();
+    try {
+      const lists = this.db.getData();
+      const reordered = this.reorderService.reorderCards({
+        lists,
+        sourceIndex,
+        destinationIndex,
+        sourceListId,
+        destinationListId,
+      });
+      this.db.setData(reordered);
+      this.updateLists();
+      
+      this.publisher.log(`Card reordered with data: ${JSON.stringify({
+        sourceIndex,
+        destinationIndex,
+        sourceListId,
+        destinationListId,
+      })}`, 'info')
+    } catch (error) {
+      this.publisher.log('Error: Card data is empty', 'error');
+    }
   }
 
   public deleteCard({listId, cardId}: {listId: string, cardId: string}): void {
+    if (listId === undefined || cardId === undefined) {
+      this.publisher.log('Error: Card data is empty', 'error');
+    }
+
+    this.publisher.log(`Card deleted with data: ${JSON.stringify({listId, cardId})}`, 'info')
     const lists = this.db.getData();
 
     const updatedLists = lists.map((list: any) => {

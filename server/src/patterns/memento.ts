@@ -2,6 +2,7 @@ import { Database } from "../data/database";
 
 const db = Database.Instance;
 
+// PATTERN: memento
 class Memento {
   public memo: string[] = [];
   public index: number = -1;

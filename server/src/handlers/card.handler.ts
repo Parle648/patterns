@@ -37,7 +37,6 @@ class CardHandler extends SocketHandler {
     this.updateLists();
   }
 
-  // todo prototype
   public copyCard({cardDTO, listId}: {cardDTO: {name: string, description: string}, listId: string}): void {
     if (listId === undefined || cardDTO === undefined) {
       this.publisher.log('Error: Card data is empty', 'error');

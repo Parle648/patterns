@@ -1,5 +1,6 @@
 import { Card } from "../data/models/card";
 
+// PETTERN: prototype
 export default class CardPrototype {
     public name;
     public description;

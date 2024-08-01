@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// PATTERN: observer
 export class Observer {
     update(message, level) {
       throw new Error('You have to implement the method update!');

@@ -1,6 +1,7 @@
 import { List } from "../data/models/list";
 import { ReorderService } from "../services/services";
 
+// PATTERN: proxy
 export default class ReorderServiceProxy {
     private reorderService = new ReorderService;
 
